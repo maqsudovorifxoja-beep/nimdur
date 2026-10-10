@@ -31,12 +31,12 @@ export default function Navbar({
   const [langMenuOpen, setLangMenuOpen] = useState(false);
 
   const navItems = [
-    { id: 'home', label: t.home, icon: Sparkles },
-    { id: 'workouts', label: t.workouts, icon: Dumbbell },
-    { id: 'nutrition', label: t.nutrition, icon: Apple },
-    { id: 'calculators', label: t.calculators, icon: Calculator },
-    { id: 'articles', label: t.articles, icon: BookOpen },
-    { id: 'admin', label: t.admin, icon: ShieldCheck, badge: 'PRO' }
+    { id: 'home', label: t.home, navLabel: t.home, icon: Sparkles },
+    { id: 'workouts', label: t.workouts, navLabel: lang === 'uz' ? 'Mashqlar' : lang === 'ru' ? 'Тренировки' : 'Workouts', icon: Dumbbell },
+    { id: 'nutrition', label: t.nutrition, navLabel: lang === 'uz' ? 'Ovqatlanish' : lang === 'ru' ? 'Питание' : 'Nutrition', icon: Apple },
+    { id: 'calculators', label: t.calculators, navLabel: lang === 'uz' ? 'Kalkulyator' : lang === 'ru' ? 'Калькуляторы' : 'Calculators', icon: Calculator },
+    { id: 'articles', label: t.articles, navLabel: t.articles, icon: BookOpen },
+    { id: 'admin', label: t.admin, navLabel: 'Admin', icon: ShieldCheck, badge: 'PRO' }
   ];
 
   const languages = [
@@ -53,8 +53,8 @@ export default function Navbar({
 
   return (
     <header className="sticky top-0 z-40 w-full backdrop-blur-xl border-b transition-colors duration-300 bg-white/80 dark:bg-slate-900/80 border-slate-200/80 dark:border-slate-800/80">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20 gap-3 sm:gap-4">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-20 gap-2 sm:gap-4">
           
           {/* Logo & Brand */}
           <div 
@@ -81,7 +81,7 @@ export default function Navbar({
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-2 shrink-0">
+          <nav className="hidden xl:flex items-center gap-1">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = currentTab === item.id;
@@ -89,14 +89,14 @@ export default function Navbar({
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
-                  className={`relative flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 xl:py-2 rounded-xl text-xs xl:text-sm font-semibold transition-all duration-200 whitespace-nowrap shrink-0 cursor-pointer ${
+                  className={`relative flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs xl:text-sm font-semibold transition-all duration-200 whitespace-nowrap cursor-pointer ${
                     isActive 
                       ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold'
                       : 'text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-100/70 dark:hover:bg-slate-800/60'
                   }`}
                 >
                   <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-emerald-500 stroke-[2.5]' : 'opacity-70'}`} />
-                  <span className="whitespace-nowrap leading-none">{item.label}</span>
+                  <span className="whitespace-nowrap leading-none">{item.navLabel || item.label}</span>
                   {item.badge && (
                     <span className="px-1.5 py-0.5 text-[9px] font-bold uppercase rounded-md bg-rose-500 text-white shadow-xs shrink-0 whitespace-nowrap">
                       {item.badge}
@@ -111,7 +111,7 @@ export default function Navbar({
           </nav>
 
           {/* Action Controls */}
-          <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             
             {/* AI Coach Assistant Quick Button */}
             <button
@@ -188,7 +188,7 @@ export default function Navbar({
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer shrink-0"
+              className="xl:hidden p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer shrink-0"
               aria-label="Toggle Navigation Menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -200,7 +200,7 @@ export default function Navbar({
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl px-4 py-4 space-y-1 animate-in slide-in-from-top duration-200">
+        <div className="xl:hidden border-t border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl px-4 py-4 space-y-1 animate-in slide-in-from-top duration-200">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = currentTab === item.id;
