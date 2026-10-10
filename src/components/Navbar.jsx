@@ -12,7 +12,8 @@ import {
   Menu, 
   X,
   Sparkles,
-  Flame
+  Flame,
+  Bot
 } from 'lucide-react';
 
 export default function Navbar({ 
@@ -23,7 +24,8 @@ export default function Navbar({
   isDark, 
   setIsDark, 
   t,
-  onQuickStart 
+  onQuickStart,
+  onOpenAi 
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langMenuOpen, setLangMenuOpen] = useState(false);
@@ -111,6 +113,17 @@ export default function Navbar({
           {/* Action Controls */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             
+            {/* AI Coach Assistant Quick Button */}
+            <button
+              onClick={onOpenAi}
+              className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-700/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 shadow-xs active:scale-95 transition-all cursor-pointer whitespace-nowrap shrink-0"
+              title={t?.aiAssistantTitle || "FitLife AI Murabbiy"}
+            >
+              <Bot className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+              <span>{t?.aiAssistantBadge || "AI Murabbiy"}</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            </button>
+
             {/* Quick Workout Button - only on wider screens to prevent crowding */}
             <button
               onClick={onQuickStart}
@@ -222,7 +235,19 @@ export default function Navbar({
               </button>
             );
           })}
-          <div className="pt-3">
+          <div className="pt-3 space-y-2">
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenAi?.();
+              }}
+              className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-700 shadow-xs"
+            >
+              <Bot className="w-5 h-5 text-emerald-500" />
+              <span>{t?.aiAssistantTitle || "FitLife AI Murabbiy"}</span>
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            </button>
+
             <button
               onClick={() => {
                 setMobileMenuOpen(false);

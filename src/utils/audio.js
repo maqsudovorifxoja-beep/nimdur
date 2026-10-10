@@ -57,6 +57,19 @@ class SoundEffects {
   playGo() {
     this.playBeep(880, 0.35, 'square');
   }
+
+  playMessagePop() {
+    this.playBeep(700, 0.08, 'sine');
+  }
+
+  playAiResponse() {
+    try {
+      this.init();
+      if (!this.ctx) return;
+      this.playBeep(520, 0.08, 'triangle');
+      setTimeout(() => this.playBeep(780, 0.1, 'sine'), 90);
+    } catch {}
+  }
 }
 
 export const sounds = new SoundEffects();

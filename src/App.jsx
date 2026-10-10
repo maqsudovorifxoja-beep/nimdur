@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import WorkoutTimerModal from './components/WorkoutTimerModal';
 import ArticleModal from './components/ArticleModal';
+import AIAssistant from './components/AIAssistant';
 
 import HomePage from './pages/HomePage';
 import WorkoutsPage from './pages/WorkoutsPage';
@@ -118,6 +119,7 @@ export default function App() {
   // Active Modals
   const [activeWorkoutForTimer, setActiveWorkoutForTimer] = useState(null);
   const [activeArticleForModal, setActiveArticleForModal] = useState(null);
+  const [isAiOpen, setIsAiOpen] = useState(false);
 
   // Sync Theme to HTML class
   useEffect(() => {
@@ -175,6 +177,7 @@ export default function App() {
         isDark={isDark}
         setIsDark={setIsDark}
         t={t}
+        onOpenAi={() => setIsAiOpen(true)}
       />
 
       {/* Main Content Area */}
@@ -266,6 +269,20 @@ export default function App() {
           onClose={() => setActiveArticleForModal(null)}
         />
       )}
+
+      {/* 24/7 Smart FitLife AI Coach Assistant */}
+      <AIAssistant
+        isOpen={isAiOpen}
+        setIsOpen={setIsAiOpen}
+        lang={lang}
+        t={t}
+        workouts={workouts}
+        foods={foods}
+        articles={articles}
+        setCurrentTab={setCurrentTab}
+        onStartWorkout={(w) => setActiveWorkoutForTimer(w)}
+        onOpenArticle={(a) => setActiveArticleForModal(a)}
+      />
 
     </div>
   );
