@@ -111,26 +111,17 @@ export default function Navbar({
           </nav>
 
           {/* Action Controls */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
             
             {/* AI Coach Assistant Quick Button */}
             <button
               onClick={onOpenAi}
-              className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-700/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 shadow-xs active:scale-95 transition-all cursor-pointer whitespace-nowrap shrink-0"
+              className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-700/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/40 shadow-xs active:scale-95 transition-all cursor-pointer whitespace-nowrap shrink-0"
               title={t?.aiAssistantTitle || "FitLife AI Murabbiy"}
             >
               <Bot className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
-              <span>{t?.aiAssistantBadge || "AI Murabbiy"}</span>
+              <span className="hidden sm:inline">{t?.aiAssistantBadge || "AI Murabbiy"}</span>
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            </button>
-
-            {/* Quick Workout Button - only on wider screens to prevent crowding */}
-            <button
-              onClick={onQuickStart}
-              className="hidden xl:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs xl:text-sm font-semibold text-white bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 shadow-md shadow-emerald-500/20 active:scale-95 transition-all cursor-pointer whitespace-nowrap shrink-0"
-            >
-              <Flame className="w-4 h-4 text-amber-300 shrink-0" />
-              <span className="whitespace-nowrap leading-none">{t.startNow}</span>
             </button>
 
             {/* Unified Language & Theme Capsule */}
@@ -251,7 +242,11 @@ export default function Navbar({
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
-                onQuickStart();
+                if (typeof onQuickStart === 'function') {
+                  onQuickStart();
+                } else {
+                  handleNavClick('workouts');
+                }
               }}
               className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-600 shadow-md shadow-emerald-500/20"
             >
